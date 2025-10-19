@@ -122,3 +122,23 @@ O objetivo deste plano de testes é mapear e documentar sistematicamente o compo
 
 - **Sinopse:** Validar que o botão "Continue Shopping" na página do carrinho funciona corretamente.
 - **Resultado Esperado:** O usuário é redirecionado da página do carrinho de volta para a página de inventário.
+
+#### CT11: Validação de Campos Vazios no Checkout
+
+- **Sinopse:** Verificar a validação de formulário com campos em branco no checkout.
+- **Resultado Esperado:** Uma mensagem de erro "Error: First Name is required" é exibida.
+
+#### CT12: Bloqueio de Acesso Direto a Páginas Protegidas
+
+- **Sinopse:** Testar a segurança contra acesso direto a URLs internas por usuários não logados.
+- **Resultado Esperado:** O usuário é redirecionado para a página de login e uma mensagem de erro é exibida.
+
+#### CT13: Verificação de Responsividade para Visualização Mobile
+
+- **Sinopse:** Verificar se a interface se adapta a telas de celular.
+- **Resultado Esperado:** Elementos essenciais (menu, carrinho, título) permanecem visíveis em uma resolução de 375x812 pixels.
+
+#### CT14: Validação de Botão "Remove" Inoperante (Bug)
+
+- **Sinopse:** Confirmar o bug onde o botão "Remove" na página de inventário não funciona.
+- **Resultado Esperado:** Após clicar em "Remove", o estado da interface (botão e contador do carrinho) não se altera.

@@ -10,3 +10,4 @@ CHECKOUT_POSTAL_CODE = "12345-678"
 
 # Mensagens e Textos Esperados
 CHECKOUT_ERROR_MESSAGE = "Last Name is required"
+LOGIN_REQUIRED_ERROR = "Epic sadface: You can only access '/inventory.html' when you are logged in."
