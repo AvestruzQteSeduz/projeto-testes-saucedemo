@@ -1,5 +1,5 @@
 # Autor: Raul da Silva Ramos
-# CT-ID: CT03 e CT04
+# CT-ID: CT05
 import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -19,11 +19,6 @@ class TestProblemUserFiltro:
         driver.find_element(By.ID, "login-button").click()
 
     def test_ct05_filtro_nao_funciona(self, driver):
-        """
-        CT05: Validar que o filtro de ordenação de produtos não tem efeito
-        para o 'problem_user'.
-        """
-
         nomes_produtos_antes = driver.find_elements(By.CLASS_NAME, "inventory_item_name")
         ordem_antes = [nome.text for nome in nomes_produtos_antes]
 

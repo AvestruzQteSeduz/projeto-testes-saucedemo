@@ -1,5 +1,5 @@
 # Autor: Raul da Silva Ramos
-# CT-ID: CT03 e CT04
+# CT-ID: CT06
 from selenium.webdriver.common.by import By
 from credentials import (
     URL,
@@ -14,7 +14,6 @@ from credentials import (
 class TestProblemUserFluxoCompra:
 
     def test_ct06_falha_ao_tentar_finalizar_compra(self, driver):
-        # --- CÓDIGO MAIS LIMPO SEM O PREFIXO 'creds.' ---
         driver.get(URL)
         driver.find_element(By.ID, "user-name").send_keys(PROBLEM_USER)
         driver.find_element(By.ID, "password").send_keys(PWD)
