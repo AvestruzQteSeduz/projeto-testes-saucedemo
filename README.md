@@ -40,15 +40,19 @@ Para executar a suíte de testes localmente, siga os passos abaixo.
     ```
 
 3.  **Instale as dependências:**
-    (Certifique-se de ter um arquivo `requirements.txt`. Se não tiver, crie-o com `pip freeze > requirements.txt`)
 
     ```bash
     pip install -r requirements.txt
     ```
 
 4.  **Execute os testes:**
+
     ```bash
+    # Para executar todos os testes
     pytest -v
+
+    # Para executar um arquivo específico
+    pytest tests/nome_do_arquivo.py -v
     ```
 
 ---
@@ -66,18 +70,28 @@ Para executar a suíte de testes localmente, siga os passos abaixo.
 
 O objetivo deste plano de testes é mapear e documentar sistematicamente o comportamento da aplicação Sauce Demo sob a perspectiva do usuário `problem_user`. A finalidade é identificar, validar e caracterizar tanto as funcionalidades que operam conforme o esperado quanto os bugs, erros e inconsistências apresentados.
 
-### Relação de Testes
+### Relação de Testes (18 Casos de Teste)
 
-| ID do Teste | Título da Especificação                                   |
-| :---------- | :-------------------------------------------------------- |
-| **CT03**    | Login com Sucesso                                         |
-| **CT04**    | Verificação de Imagens Incorretas na Página de Inventário |
-| **CT05**    | Validação de Filtro de Ordenação Inoperante               |
-| **CT06**    | Falha no Fluxo de Checkout                                |
-| **CT07**    | Adição e Remoção Múltipla de Itens no Carrinho            |
-| **CT08**    | Redirecionamento Incorreto de Links de Produto            |
-| **CT09**    | Persistência do Carrinho Após Logout                      |
-| **CT10**    | Navegação Pós-Falha e Resiliência da Aplicação            |
+| ID do Teste | Título da Especificação                                          |
+| :---------- | :--------------------------------------------------------------- |
+| **CT03**    | Login com Sucesso                                                |
+| **CT04**    | Verificação de Imagens Incorretas                                |
+| **CT05**    | Validação de Filtro de Ordenação Inoperante (Bug)                |
+| **CT06**    | Falha no Fluxo de Checkout (Bug)                                 |
+| **CT07**    | Adição e Remoção Múltipla de Itens no Carrinho                   |
+| **CT08**    | Redirecionamento Incorreto de Links de Produto (Bug)             |
+| **CT09**    | Persistência do Carrinho Após Logout (Bug)                       |
+| **CT10**    | Navegação Pós-Falha e Resiliência da Aplicação                   |
+| **CT11**    | Validação de Campos Vazios no Checkout                           |
+| **CT12**    | Bloqueio de Acesso Direto a Páginas Protegidas                   |
+| **CT13**    | Verificação de Responsividade para Visualização Mobile           |
+| **CT14**    | Validação de Botão "Remove" Inoperante no Inventário (Bug)       |
+| **CT15**    | Integridade de Dados do Inventário ao Carrinho (Bug)             |
+| **CT16**    | Jornada do Usuário Indeciso com Item Quebrado (Bug)              |
+| **CT17**    | Consistência de Estado da UI Pós-Navegação                       |
+| **CT18**    | Vazamento de Estado entre Sessões de Usuários (Bug de Segurança) |
+| **CT19**    | Bypass de Fluxo de Checkout pela URL (Bug de Robustez)           |
+| **CT20**    | Sincronização Profunda de Estado da UI                           |
 
 ---
 
@@ -86,59 +100,89 @@ O objetivo deste plano de testes é mapear e documentar sistematicamente o compo
 #### CT03: Login com Sucesso
 
 - **Sinopse:** Validar que o `problem_user` consegue se autenticar com sucesso.
-- **Resultado Esperado:** O usuário é redirecionado para a página de inventário (`/inventory.html`).
+- **Resultado Esperado:** O usuário é redirecionado para a página de inventário.
 
 #### CT04: Verificação de Imagens Incorretas
 
-- **Sinopse:** Confirmar o bug visual onde todas as imagens dos produtos na página de inventário são idênticas.
+- **Sinopse:** Confirmar o bug visual onde todas as imagens dos produtos são idênticas.
 - **Resultado Esperado:** A contagem de URLs de imagem únicas é igual a 1.
 
-#### CT05: Validação de Filtro Inoperante
+#### CT05: Validação de Filtro Inoperante (Bug)
 
-- **Sinopse:** Confirmar o bug funcional onde o filtro de ordenação de produtos não tem efeito.
-- **Resultado Esperado:** A ordem dos produtos na página permanece a mesma após a aplicação do filtro.
+- **Sinopse:** Confirmar que o filtro de ordenação de produtos não tem efeito.
+- **Resultado Esperado:** A ordem dos produtos permanece a mesma após aplicar o filtro.
 
-#### CT06: Falha no Fluxo de Checkout
+#### CT06: Falha no Fluxo de Checkout (Bug)
 
-- **Sinopse:** Validar o bug que impede o `problem_user` de avançar no processo de checkout.
-- **Resultado Esperado:** A aplicação permanece na página de checkout e exibe uma mensagem de erro.
+- **Sinopse:** Validar que o `problem_user` não consegue avançar no checkout.
+- **Resultado Esperado:** A aplicação exibe uma mensagem de erro na página de checkout.
 
 #### CT07: Adição e Remoção Múltipla no Carrinho
 
-- **Sinopse:** Verificar a consistência do carrinho de compras ao manipular múltiplos itens.
-- **Resultado Esperado:** O contador e a lista de itens no carrinho refletem com precisão todas as ações de adição e remoção.
+- **Sinopse:** Verificar a consistência do carrinho ao manipular múltiplos itens.
+- **Resultado Esperado:** O contador e a lista de itens refletem com precisão as ações.
 
-#### CT08: Redirecionamento Incorreto de Links de Produto
+#### CT08: Redirecionamento Incorreto de Links de Produto (Bug)
 
-- **Sinopse:** Documentar o bug onde links de produtos levam a páginas de detalhes erradas, que exibem imagens de terceiros produtos.
-- **Resultado Esperado:** Ao clicar no link do "Backpack" (ID 4), o usuário é levado à página do "Fleece Jacket" (ID 5).
+- **Sinopse:** Documentar que links de produtos levam a páginas de detalhes erradas.
+- **Resultado Esperado:** Clicar no link do "Backpack" (ID 4) leva à página do "Fleece Jacket" (ID 5).
 
-#### CT09: Persistência do Carrinho Após Logout
+#### CT09: Persistência do Carrinho Após Logout (Bug)
 
-- **Sinopse:** Confirmar o bug onde a sessão do carrinho não é encerrada, fazendo com que os itens persistam após o logout e um novo login.
-- **Resultado Esperado:** Após fazer logout e login novamente, o item adicionado na sessão anterior ainda está no carrinho.
+- **Sinopse:** Confirmar que a sessão do carrinho não é limpa após o logout.
+- **Resultado Esperado:** Após fazer logout e login novamente, o item da sessão anterior ainda está no carrinho.
 
 #### CT10: Navegação Pós-Falha e Resiliência
 
-- **Sinopse:** Validar que o botão "Continue Shopping" na página do carrinho funciona corretamente.
-- **Resultado Esperado:** O usuário é redirecionado da página do carrinho de volta para a página de inventário.
+- **Sinopse:** Validar que o botão "Continue Shopping" funciona corretamente.
+- **Resultado Esperado:** O usuário é redirecionado do carrinho para a página de inventário.
 
 #### CT11: Validação de Campos Vazios no Checkout
 
-- **Sinopse:** Verificar a validação de formulário com campos em branco no checkout.
-- **Resultado Esperado:** Uma mensagem de erro "Error: First Name is required" é exibida.
+- **Sinopse:** Verificar a validação de formulário com campos em branco.
+- **Resultado Esperado:** Uma mensagem "Error: First Name is required" é exibida.
 
 #### CT12: Bloqueio de Acesso Direto a Páginas Protegidas
 
-- **Sinopse:** Testar a segurança contra acesso direto a URLs internas por usuários não logados.
-- **Resultado Esperado:** O usuário é redirecionado para a página de login e uma mensagem de erro é exibida.
+- **Sinopse:** Testar a segurança contra acesso direto a URLs por usuários não logados.
+- **Resultado Esperado:** O usuário é redirecionado para a página de login com uma mensagem de erro.
 
 #### CT13: Verificação de Responsividade para Visualização Mobile
 
 - **Sinopse:** Verificar se a interface se adapta a telas de celular.
-- **Resultado Esperado:** Elementos essenciais (menu, carrinho, título) permanecem visíveis em uma resolução de 375x812 pixels.
+- **Resultado Esperado:** Elementos essenciais permanecem visíveis em resolução mobile.
 
-#### CT14: Validação de Botão "Remove" Inoperante (Bug)
+#### CT14: Validação de Botão "Remove" Inoperante no Inventário (Bug)
 
-- **Sinopse:** Confirmar o bug onde o botão "Remove" na página de inventário não funciona.
-- **Resultado Esperado:** Após clicar em "Remove", o estado da interface (botão e contador do carrinho) não se altera.
+- **Sinopse:** Confirmar que o botão "Remove" na página de inventário não funciona.
+- **Resultado Esperado:** Após clicar em "Remove", o estado da interface não se altera.
+
+#### CT15: Integridade de Dados do Inventário ao Carrinho (Bug)
+
+- **Sinopse:** Validar a consistência dos dados e descobrir falhas na adição de itens.
+- **Resultado Esperado:** Apenas os itens cujos botões "Add to cart" funcionam são exibidos corretamente no carrinho.
+
+#### CT16: Jornada do Usuário Indeciso com Item Quebrado (Bug)
+
+- **Sinopse:** Simular uma jornada de usuário complexa, descobrindo mais botões inoperantes.
+- **Resultado Esperado:** O teste confirma que o botão "Add to cart" do "Fleece Jacket" não funciona, mantendo a consistência do carrinho.
+
+#### CT17: Consistência de Estado da UI Pós-Navegação
+
+- **Sinopse:** Validar se a UI "lembra" o estado do carrinho ao navegar entre páginas.
+- **Resultado Esperado:** Ao adicionar um item e voltar para a página de inventário, o botão do item ainda mostra "Remove".
+
+#### CT18: Vazamento de Estado entre Sessões de Usuários (Bug de Segurança)
+
+- **Sinopse:** Validar a falha de segurança onde o carrinho de um usuário vaza para a sessão de outro.
+- **Resultado Esperado:** O `standard_user` vê o item do `problem_user` em seu carrinho após o login.
+
+#### CT19: Bypass de Fluxo de Checkout pela URL (Bug de Robustez)
+
+- **Sinopse:** Validar a falha de robustez que permite pular etapas do checkout via URL.
+- **Resultado Esperado:** A aplicação permite o acesso direto a `checkout-step-two.html` sem passar pelo passo um.
+
+#### CT20: Sincronização Profunda de Estado da UI
+
+- **Sinopse:** Validar se a UI do inventário reflete uma remoção feita na página do carrinho.
+- **Resultado Esperado:** Após remover um item no carrinho e voltar, o botão correspondente no inventário volta a ser "Add to cart".

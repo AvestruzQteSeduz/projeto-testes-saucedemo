@@ -1,6 +1,7 @@
 # Dados de Acesso e URLs
 URL: str = "https://www.saucedemo.com/"
 PROBLEM_USER = "problem_user"
+STANDARD_USER = "standard_user"
 PWD: str = "secret_sauce"
 
 # Dados de Teste para o Fluxo de Compra
